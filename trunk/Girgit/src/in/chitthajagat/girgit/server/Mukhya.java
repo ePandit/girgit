@@ -137,25 +137,58 @@ String मूलपता = null;
 				जवाब.sendRedirect("/" + बदलामूल);
 				return;
 			}
-
-			if(डोमेनअवैधहै(बदली)){
+			StringBuilder डोमेन = null;
+			int ल = बदली.indexOf("/");
+			if(ल == -1) {  // र ही डोमेन है
+				डोमेन = new StringBuilder(बदली);
+			} else { //पहले "/" के पहले का माल उठा लो
+				डोमेन = new  StringBuilder(बदली.substring(0, ल));
+			}
+			if(डोमेनअवैधहै(डोमेन)){
 				जवाब.setStatus(404);
 				लेखनी
 				.println("<html><head><title>404 - Page not found</title></head><body><h1>404 - Page not found</h1><p>Girgit: The requested domain is invalid. Please check if you: <ul><li>mistyped the url. Check the spelling and retry.</li></ul></p><p><a href=\"" + GirgitParimaan.यूआरऍलमुख्य() + "http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
 				return;
 			}
-			URL यूआरऍल = new URL("http://" + बदली.toString());
+					if(डोमेनअवरोधितहै(डोमेन)){
+				जवाब.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
+				लेखनी
+				.println("<html><head><title>" 
+						+ HttpURLConnection.HTTP_NOT_FOUND 
+						+ " Page not found</title></head><body><h1>"
+						+ HttpURLConnection.HTTP_NOT_FOUND
+						+ " Page not found</h1><p>Girgit: The requested domain is blocked. Please check if you: <ul><li>mistyped the url. Check the spelling and retry.</li><li>Are transliterate a page that contains text. Girgit cannot provide meaningful output for non-text pages like images.</li></ul></p><p><a href=\"" + GirgitParimaan.यूआरऍलमुख्य() + "http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
+				return;
+			}
+			
+			// URL यूआरऍल = यूआरऍल_लाओ(अर्ज़ी);
+			if (अनिच्छासूचीमेंहै(बदली)) {
+				जवाब.setStatus(404);
+				लेखनी
+						.println("<html><head><title>404 - Page not found</title></head><body><h1>404 - Page not found</h1><p>Girgit: The owners of this website have requested that this their site should not be available via Girgit. You can try transliterating another URL.</p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
 
+				// जवाब.sendError(404, "");
+				return;
+			}
+
+			URL यूआरऍल = new URL("http://" + बदली.toString());
+			URLConnection जुड़ाव = null; //try के बाहर, ताकि जेरिचो को मिल जाए
+	HttpURLConnection हटटपजुड़ाव = null;
 			try {
 
-				URLConnection जुड़ाव = यूआरऍल.openConnection();
+				 जुड़ाव = यूआरऍल.openConnection();
 				चिट्ठा.info("कनेक्शन खुला");
 
 				if (जुड़ाव instanceof HttpURLConnection) {
-					HttpURLConnection हटटपजुड़ाव = (HttpURLConnection) जुड़ाव;
+					
+					हटटपजुड़ाव = (HttpURLConnection) जुड़ाव;
+					हटटपजुड़ाव.setConnectTimeout(10000); //दस सेकिंड
 					हटटपजुड़ाव.setInstanceFollowRedirects(false);
-					हटटपजुड़ाव.setRequestMethod("HEAD");
+					हटटपजुड़ाव.setRequestMethod("GET");
+					चिट्ठा.info("हटटपजुड़ाव जुड़ने जा रहा है");
+									
 					हटटपजुड़ाव.connect();
+					चिट्ठा.info("हटटपजुड़ाव जुड़ा");
 					int परिणाम = हटटपजुड़ाव.getResponseCode();
 					if (परिणाम >= HttpServletResponse.SC_MULTIPLE_CHOICES /* 300 */
 							&& परिणाम < HttpServletResponse.SC_BAD_REQUEST /* 400 */) {
@@ -217,38 +250,19 @@ String मूलपता = null;
 				}
 			} catch (IOException अपवाद) {
 
-				चिट्ठा.warning("यूआरऍल [" + "http://" + बदली.toString()
-						+ "] में पंगा हुआ।");
+				
 				जवाब.setStatus(500);
 				लेखनी
-						.println("<html><head><title>500 Internal Server Error</title></head><body><h1>500 Internal Server Error</h1><p>Girgit: Could not connect to desired URL. You might want to:<ul><li>check the spelling of the URL.</li><li>retry after some time.</li><li>report the issue to girgit at chitthajagat dot in</li></ul></p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></p><p>If you are the server admin, the error logs are available via the control panel.</p></body></html>");
+						.println("<html><head><title>500 Internal Server Error</title></head><body><h1>500 Internal Server Error</h1><p>Girgit: Could not connect to desired URL in 10 seconds. You might want to:<ul><li>check the spelling of the URL.</li><li>retry after some time.</li><li>report the issue to girgit at chitthajagat dot in</li></ul></p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></p><p>If you are the server admin, the error logs are available via the control panel.</p></body></html>");
 				चिट्ठा.warning(अपवाद.toString());
 				अपवाद.printStackTrace(System.out);
 				return;
 
 			}
 
-			// URL यूआरऍल = यूआरऍल_लाओ(अर्ज़ी);
-			if (अनिच्छासूचीमेंहै(यूआरऍल)) {
-				जवाब.setStatus(404);
-				लेखनी
-						.println("<html><head><title>404 - Page not found</title></head><body><h1>404 - Page not found</h1><p>Girgit: The owners of this website have requested that this their site should not be available via Girgit. You can try transliterating another URL.</p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
+			चिट्ठा.info("स्रोत बनने वाला है");
 
-				// जवाब.sendError(404, "");
-				return;
-			}
-
-			// लिपि लाओ
-		
-			चिट्ठा.info("लिपि [" + लिपि + "]");
-
-			// यूआरऍल लाओ
-
-			चिट्ठा.info("सही यूआरऍल " + यूआरऍल);
-
-			// जेरिचो खुद ही यूआरऍल गेट करेगा
-
-			Source स्रोत = new Source(यूआरऍल);
+			Source स्रोत = new Source(हटटपजुड़ाव);
 			चिट्ठा.info("स्रोत बन गया");
 
 			स्रोत.fullSequentialParse();
@@ -292,9 +306,7 @@ String मूलपता = null;
 			// बदला दस्तावेज़ लिखो
 			StringBuilder कुछबदलाहै = new StringBuilder("न");
 			Girgit.रंगोहटमल(सीऍसऍसस्रोत, सीऍसऍसबदलू, लिपि, कुछबदलाहै);
-			// String लिप्यंतरित_दस्तावेज़ = लिप्यंतरण_करो(मूल_दस्तावेज़, लिपि);
-			// लेखनी.println(Girgit.रंगो(नयाबदलू.toString(), "en"));
-			// अगर कुछ बदला ही नहीं तो -
+
 			चिट्ठा.info(कुछबदलाहै.toString());
 			if (कुछबदलाहै.toString().equals("न")) {
 				चिट्ठा.warning("लिप्यंतरण के लिए माल नहीं");
@@ -406,14 +418,22 @@ private boolean पुर्ज़ाहै(String र) {
 	return false;
 }
 
-private boolean डोमेनअवैधहै(StringBuilder र) {
-	StringBuilder डोमेन = null;
-	int ल = र.indexOf("/");
-	if(ल == -1) {  // र ही डोमेन है
-		डोमेन = new StringBuilder(र);
-	} else { //पहले "/" के पहले का माल उठा लो
-		डोमेन = new  StringBuilder(र.substring(0, ल));
+private boolean डोमेनअवरोधितहै(StringBuilder डोमेन) {
+	if(
+			डोमेन.equals("bp1.blogger.com") ||
+			डोमेन.equals("bp0.blogger.com") ||
+			डोमेन.equals("bp3.blogger.com") ||
+			डोमेन.equals("lh3.ggpht.com") ||
+			डोमेन.equals("lh4.ggpht.com") ||
+			डोमेन.equals("lh5.ggpht.com") ||
+			डोमेन.equals("lh6.ggpht.com")			) {
+		return true;
 	}
+		
+	return false;
+}
+
+private boolean डोमेनअवैधहै(StringBuilder डोमेन) {
 	int लंबाई =  डोमेन.length();
 	//डोमेन के आखिरी बिंदु कहाँ है
 	int  व = डोमेन.lastIndexOf(".");
@@ -488,9 +508,9 @@ private boolean डोमेनअवैधहै(StringBuilder र) {
 
 	}
 
-	private boolean अनिच्छासूचीमेंहै(URL यूआरऍल) {
+	private boolean अनिच्छासूचीमेंहै(StringBuilder र) {
 		// बाद में यह सूची किसी संचिका में डालनी होगी
-		if (यूआरऍल.toString().startsWith("http://www.blogofcrappyness.com")) {
+		if (र.toString().startsWith("http://www.blogofcrappyness.com")) {
 			return true;
 		}
 
@@ -615,8 +635,5 @@ private boolean डोमेनअवैधहै(StringBuilder र) {
 	 * return मूल_दस्तावेज़; }
 	 */
 
-	private String लिप्यंतरण_करो(String मूल_दस्तावेज़, String लिपि) {
-		return मूल_दस्तावेज़;
-	}
 
 }
