@@ -7956,12 +7956,4 @@ public class Girgit {
 
 	}
 
-	private static void रंगबदलो(String नयारंग, String[][] सूची) {
-		for (int क = 0; क < सूची[0].length; ++क) {
-			नयारंग.replaceAll(सूची[0][क], सूची[1][क]);
-
-		}
-		return;
-	}
-
 }
