@@ -52,7 +52,7 @@ return;
 
 		String मूलपथ = अर्ज़ी.getPathInfo();
 		String परिमाण = अर्ज़ी.getQueryString();
-String मूलपता = null;
+//String मूलपता = null;
 		// मूल दस्तावेज़ लाओ
 		try {
 			
@@ -70,7 +70,7 @@ String मूलपता = null;
 				बदली.append("?" + परिमाण);
 			}
 			चिट्ठा.info("पुनः के पहले [" + बदली.toString() + "]");
-			मूलपता = बदली.toString();
+	//		मूलपता = बदली.toString();
 			boolean पुनःहै = false;
 			do {
 				if (बदली.toString().startsWith(GirgitParimaan.यूआरऍलउड़िया())) {
@@ -165,10 +165,25 @@ String मूलपता = null;
 			if (अनिच्छासूचीमेंहै(बदली)) {
 				जवाब.setStatus(404);
 				लेखनी
-						.println("<html><head><title>404 - Page not found</title></head><body><h1>404 - Page not found</h1><p>Girgit: The owners of this website have requested that this their site should not be available via Girgit. You can try transliterating another URL.</p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
+						.println("<html><head><title>404 Page not found</title></head><body><h1>404 - Page not found</h1><p>Girgit: The owners of this website have requested that this their site should not be available via Girgit. You can try transliterating another URL.</p><p><a href=\"http://girgit.chitthajagat.in\">Retry</a></p></body></html>");
 
 				// जवाब.sendError(404, "");
 				return;
+			}
+			if(पथअवरोधितहै(बदली)){
+				जवाब.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
+				लेखनी
+						.println("<html><head><title>"
+								+ HttpURLConnection.HTTP_NOT_FOUND
+								+ " Not Found</title></head><body><h1>"
+								+ HttpURLConnection.HTTP_NOT_FOUND
+								+ " Not Found</h1><p>Girgit: Unsupported file extension. You can try transliterating another URL.</p><p><a href=\"" +
+								GirgitParimaan.यूआरऍलमुख्य()
+								+"\">Retry</a></p></body></html>");
+
+				// जवाब.sendError(404, "");
+				return;
+				
 			}
 
 			URL यूआरऍल = new URL("http://" + बदली.toString());
@@ -433,6 +448,46 @@ private boolean डोमेनअवरोधितहै(StringBuilder डो�
 	return false;
 }
 
+private boolean पथअवरोधितहै(StringBuilder पथ){
+	int पथांत = पथ.indexOf("?");
+	String केवलपथ = null;
+	if(पथांत == -1) {
+		केवलपथ = पथ.toString();
+	} else {
+		केवलपथ = पथ.substring(0, पथांत);
+	}
+
+	if(
+			केवलपथ.endsWith(".png") ||
+			केवलपथ.endsWith(".PNG") ||
+			केवलपथ.endsWith(".jpg") ||
+			केवलपथ.endsWith(".JPG") ||
+			केवलपथ.endsWith(".gif") ||
+			केवलपथ.endsWith(".GIF") ||
+			केवलपथ.endsWith(".bmp") ||
+			केवलपथ.endsWith(".BMP") ||
+			केवलपथ.endsWith(".exe") ||
+			केवलपथ.endsWith(".jpeg") ||
+			केवलपथ.endsWith(".JPEG") ||
+			केवलपथ.endsWith(".exe") ||
+			केवलपथ.endsWith(".EXE") ||
+			केवलपथ.endsWith(".swf") ||
+			केवलपथ.endsWith(".SWF") ||
+			केवलपथ.endsWith(".mp3") ||
+			केवलपथ.endsWith(".MP3") ||
+			केवलपथ.endsWith(".css") ||
+			केवलपथ.endsWith(".CSS") ||
+			केवलपथ.endsWith(".js") ||
+			केवलपथ.endsWith(".JS")
+			
+			) {
+		return true;
+	}
+
+	
+	return false;
+}
+
 private boolean डोमेनअवैधहै(StringBuilder डोमेन) {
 	int लंबाई =  डोमेन.length();
 	//डोमेन के आखिरी बिंदु कहाँ है
@@ -566,74 +621,6 @@ private boolean डोमेनअवैधहै(StringBuilder डोमेन)
 		}
 		return "";
 	}
-
-	private URL यूआरऍल_लाओ(HttpServletRequest अर्ज़ी)
-			throws MalformedURLException {
-
-		String मूल = अर्ज़ी.getPathInfo();
-		String परिमाण = अर्ज़ी.getQueryString();
-		चिट्ठा.info(मूल);
-		StringBuilder बदली = new StringBuilder(मूल);
-		if (मूल.startsWith("/http://")) {
-			बदली.replace(0, "/http://".length(), "");
-		} else if (मूल.startsWith("/https://")) {
-			बदली.replace(0, "/https://".length(), "");
-		} else if (मूल.startsWith("/")) {
-			बदली.replace(0, "/".length(), "");
-		}
-		if (परिमाण != null) {
-			बदली.append("?" + परिमाण);
-		}
-		चिट्ठा.info(बदली.toString());
-
-		URL यूआरऍल = new URL("http://" + बदली.toString());
-
-		चिट्ठा.info("यूआरऍल बना");
-
-		try {
-
-			URLConnection जुड़ाव = यूआरऍल.openConnection();
-			चिट्ठा.info("कनेक्शन खुला");
-
-			if (जुड़ाव instanceof HttpURLConnection) {
-				HttpURLConnection हटटपजुड़ाव = (HttpURLConnection) जुड़ाव;
-				हटटपजुड़ाव.setInstanceFollowRedirects(false);
-				हटटपजुड़ाव.setRequestMethod("HEAD");
-				हटटपजुड़ाव.connect();
-				int परिणाम = हटटपजुड़ाव.getResponseCode();
-				if (परिणाम >= 300 && परिणाम < 400) {
-					String नयापता = हटटपजुड़ाव.getHeaderField("Location");
-					चिट्ठा.info("परिणाम [" + परिणाम + "]");
-					if (नयापता != null) {
-						चिट्ठा.info("नयापता [" + नयापता + "]");
-						URL नयायूआरऍल = new URL(नयापता);
-						return नयायूआरऍल;
-					}
-				}
-			}
-		} catch (IOException अपवाद) {
-
-			चिट्ठा.warning("यूआरऍल [" + "http://" + बदली.toString()
-					+ "] में पंगा हुआ।");
-			अपवाद.printStackTrace(System.out);
-			return यूआरऍल;
-
-		}
-		return यूआरऍल;
-	}
-
-	/*
-	 * इसके बजाय जेरिचो का इस्तेमाल किया गया क्योंकि कूटबंधन के पंगे थे private
-	 * String मूल_दस्तावेज़_लाओ(URL यूआरऍल) throws IOException { URLConnection
-	 * जुड़ाव = null; String मूल_दस्तावेज़ = null;
-	 * 
-	 * जुड़ाव = यूआरऍल.openConnection();
-	 * 
-	 * Scanner पाठक = new Scanner(जुड़ाव.getInputStream());
-	 * पाठक.useDelimiter("\\Z"); मूल_दस्तावेज़ = पाठक.next();
-	 * 
-	 * return मूल_दस्तावेज़; }
-	 */
 
 
 }
