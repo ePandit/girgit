@@ -2,8 +2,8 @@ package in.chitthajagat.girgit.server;
 
 public class GirgitTamil {
 	public static final String[][] नक्शा = {
-		
-		{ "", ""},
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 		{"ँ", "஁"},
 		{"ं", "ஂ"},
 		{"ः", "ஃ"},
@@ -1103,7 +1103,8 @@ public class GirgitTamil {
 		{"फ़", "ப"},
 		{"य़", "ய"},
 		{"ੰ", "ஂ"},
-		{"ੱ", ""}
+		{"ੱ", ""},
+		{"", ""} //खाली - अंत वाले खाली रखो
 
 	};
 

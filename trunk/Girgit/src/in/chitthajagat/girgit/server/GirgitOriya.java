@@ -3,7 +3,8 @@ package in.chitthajagat.girgit.server;
 public class GirgitOriya {
 
 	public static final String[][] नक्शा = {
-		
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 			{ "ঁ", "ଁ" }, { "ং", "ଂ" }, { "ঃ", "ଃ" }, { "অ", "ଅ" }, { "আ", "ଆ" },
 					{ "ই", "ଇ" }, { "ঈ", "ଈ" }, { "উ", "ଉ" }, { "ঊ", "ଊ" },
 					{ "ঋ", "ଋ" }, { "ঌ", "ଌ" }, { "঍", "଍" }, { "঎", "଎" },

@@ -286,19 +286,19 @@ return;
 			OutputDocument बदलू = new OutputDocument(स्रोत);
 			चिट्ठा.info("बदलू बन गया");
 
-			// हटमल से खटमल निकालो (बंदर के जरिए) - बंदर.जूँनिकालो()
+	/*	इसकी ज़रूरत नहीं है, इसे अब गिरगिट.रंगोहटमल में ही किया जाएगा
 			Bandar वानर = new Bandar(स्रोत, बदलू);
-			चिट्ठा.info("बंदर बन गया");
 			String साफ़_दस्तावेज़ = वानर.जूँनिकालो();
 
-			// System.out.println("bandar paar");
+		
 			Source साफ़स्रोत = new Source(साफ़_दस्तावेज़);
 			साफ़स्रोत.fullSequentialParse();
 			OutputDocument नयाबदलू = new OutputDocument(साफ़स्रोत);
-			// हटमल की कड़ियाँ खोजो और उन्हें बदलो
-			// हटमल के a title खोजो और बदलो
 
 			Doodhwala दूधिया = new Doodhwala(साफ़स्रोत, नयाबदलू);
+	*/
+			Doodhwala दूधिया = new Doodhwala(स्रोत, बदलू);
+			
 			चिट्ठा.info("दूधिया बन गया");
 			दूधिया.कड़ीमेंमिलाओ(पानीलाओ(लिपि), यूआरऍल.getHost(),
 					चीनीलाओ(यूआरऍल), GirgitParimaan.सिवाय());
@@ -307,7 +307,11 @@ return;
 			दूधिया.चीनीडालो(यूआरऍल.getHost(), HTMLElementName.LINK, "href");
 			दूधिया.चीनीडालो(यूआरऍल.getHost(), HTMLElementName.SCRIPT, "src");
 
+			/*
 			Source सीऍसऍसस्रोत = new Source(नयाबदलू.toString());
+*/
+			Source सीऍसऍसस्रोत = new Source(बदलू.toString());
+
 			सीऍसऍसस्रोत.fullSequentialParse();
 			OutputDocument सीऍसऍसबदलू = new OutputDocument(सीऍसऍसस्रोत);
 			Doodhwala दूधियासीऍसऍस = new Doodhwala(सीऍसऍसस्रोत, सीऍसऍसबदलू);
@@ -478,7 +482,22 @@ private boolean पथअवरोधितहै(StringBuilder पथ){
 			केवलपथ.endsWith(".css") ||
 			केवलपथ.endsWith(".CSS") ||
 			केवलपथ.endsWith(".js") ||
-			केवलपथ.endsWith(".JS")
+			केवलपथ.endsWith(".JS") ||
+			केवलपथ.endsWith(".pdf") ||
+			केवलपथ.endsWith(".PDF") ||
+			केवलपथ.endsWith(".doc") ||
+			केवलपथ.endsWith(".DOC") ||
+			केवलपथ.endsWith(".ppt") ||
+			केवलपथ.endsWith(".PPT") ||
+			केवलपथ.endsWith(".xls") ||
+			केवलपथ.endsWith(".XLS") ||
+			केवलपथ.endsWith(".docx") ||
+			केवलपथ.endsWith(".DOCX") ||
+			केवलपथ.endsWith(".pptx") ||
+			केवलपथ.endsWith(".PPTX") ||
+			केवलपथ.endsWith(".xlsx") ||
+			केवलपथ.endsWith(".XLSX")
+
 			
 			) {
 		return true;

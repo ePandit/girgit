@@ -37,18 +37,22 @@ public class Bandar {
 		this.बदलू = बदलूदस्तावेज़;
 	}
 
+	public void हिस्सेकीजूँनिकालो(CharacterReference हिस्सा) {
+		List<CharacterReference> थैली = हिस्सा.getAllCharacterReferences();
+
+		for (int क = 0; क < थैली.size(); ++क) {
+			CharacterReference खटमल = थैली.get(क);
+			एकज़ूज़ूबदलो(खटमल, बदलू);
+		}		
+	}
+	
 	public String जूँनिकालो() {
 		for (Iterator<Segment> उँगली = this.स्रोत.getNodeIterator(); उँगली
 				.hasNext();) {
 			Segment हिस्सा = उँगली.next();
 			if (हिस्सा instanceof CharacterReference) {
-				List<CharacterReference> थैली = हिस्सा
-						.getAllCharacterReferences();
+				हिस्सेकीजूँनिकालो((CharacterReference)हिस्सा);
 
-				for (int क = 0; क < थैली.size(); ++क) {
-					CharacterReference खटमल = थैली.get(क);
-					एकज़ूज़ूबदलो(खटमल, बदलू);
-				}
 			}
 
 			else if (हिस्सा instanceof Tag) {
@@ -101,6 +105,7 @@ public class Bandar {
 					}
 				}
 				बदलू.replace(टुकड़ा, बदलालेख.toString());
+				
 			}
 		}
 	}

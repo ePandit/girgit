@@ -2,8 +2,9 @@ package in.chitthajagat.girgit.server;
 
 public class GirgitBangla {
 	public static final String[][] नक्शा = { 
-		
-				{ "ँ", "ঁ" },
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
+{ "ँ", "ঁ" },
 					{ "ं", "ং" }, { "ः", "ঃ" }, { "अ", "অ" }, { "आ", "আ" },
 					{ "इ", "ই" }, { "ई", "ঈ" }, { "उ", "উ" }, { "ऊ", "ঊ" },
 					{ "ऋ", "ঋ" }, { "ऌ", "ঌ" }, { "ऍ", "঍" }, { "ऎ", "঎" },

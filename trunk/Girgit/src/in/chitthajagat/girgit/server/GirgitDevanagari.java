@@ -3,7 +3,8 @@ package in.chitthajagat.girgit.server;
 public class GirgitDevanagari {
 	public static final String [][] नक्शा = 
 	 {
-	 
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 	  {"ਁ", "ँ"},
 	 {"ਂ", "ं"},
 	 {"ਃ", "ः"},

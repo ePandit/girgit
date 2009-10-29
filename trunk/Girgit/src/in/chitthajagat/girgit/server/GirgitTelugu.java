@@ -2,7 +2,8 @@ package in.chitthajagat.girgit.server;
 
 public class GirgitTelugu {
 	public static final String[][] नक्शा = {
-		
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 			{"ँ", "ఁ"},
 			{"ं", "ం"},
 			{"ः", "ః"},
