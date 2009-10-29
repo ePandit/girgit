@@ -2,7 +2,8 @@ package in.chitthajagat.girgit.server;
 
 public class GirgitGujarati {
 	public static final String[][] नक्शा = {
-		
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 				 {"ँ", "ઁ"},
 				{"ं", "ં"},
 				{"ः", "ઃ"},

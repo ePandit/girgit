@@ -3,7 +3,8 @@ package in.chitthajagat.girgit.server;
 public class GirgitKannada {
 
 	public static final String[][] नक्शा = {
-	
+		{"‍", ""}, //ZWJ
+		{"‌", ""}, //ZWNJ
 				{"ँ", "ಁ"},
 				{"ं", "ಂ"},
 				{"ः", "ಃ"},

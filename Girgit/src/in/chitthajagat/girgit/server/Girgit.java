@@ -7764,18 +7764,18 @@ public class Girgit {
 			}
 		} else if (लिपि.equals("bn")) {
 			if (नक्शाबंग्ला१ == null) {
-				// 896 को हार्डकोड किया है यहाँ
-				नक्शाबंग्ला१ = new HashMap<String, String>(896);
-				for (int क = 0; क < 896; ++क) {
+				// 898 को हार्डकोड किया है यहाँ
+				नक्शाबंग्ला१ = new HashMap<String, String>(898);
+				for (int क = 0; क < 898; ++क) {
 					नक्शाबंग्ला१.put(GirgitBangla.नक्शा[क][0],
 							GirgitBangla.नक्शा[क][1]);
 				}
 			}
 		} else if (लिपि.equals("or")) {
 			if (नक्शाउड़िया१ == null) {
-				// 902 को हार्डकोड किया है यहाँ
-				नक्शाउड़िया१ = new HashMap<String, String>(902);
-				for (int क = 0; क < 902; ++क) {
+				// 904 को हार्डकोड किया है यहाँ
+				नक्शाउड़िया१ = new HashMap<String, String>(904);
+				for (int क = 0; क < 904; ++क) {
 					नक्शाउड़िया१.put(GirgitOriya.नक्शा[क][0],
 							GirgitOriya.नक्शा[क][1]);
 				}
@@ -7783,63 +7783,77 @@ public class Girgit {
 		}
 		else if (लिपि.equals("te")) {
 			if (नक्शातेलुगु१ == null) {
-				// 880 को हार्डकोड किया है यहाँ
-				नक्शातेलुगु१ = new HashMap<String, String>(880);
-				for (int क = 0; क < 880; ++क) {
+				// 882 को हार्डकोड किया है यहाँ
+				नक्शातेलुगु१ = new HashMap<String, String>(882);
+				for (int क = 0; क < 882; ++क) {
 					नक्शातेलुगु१.put(GirgitTelugu.नक्शा[क][0],
 							GirgitTelugu.नक्शा[क][1]);
 				}
 			}
 		}else if (लिपि.equals("ta")) {
 			if (नक्शातमिल१ == null) {
-				// 1100 को हार्डकोड किया है यहाँ
-				नक्शातमिल१ = new HashMap<String, String>(1100);
-				for (int क = 0; क < 1100; ++क) {
+				// 1102 को हार्डकोड किया है यहाँ, वैसे अब इसकी ज़रूरत नहीं है - अंत सूचक है
+				नक्शातमिल१ = new HashMap<String, String>(1102);
+				
+				/*
+				for (int क = 0; क < 1102; ++क) {
 					नक्शातमिल१.put(GirgitTamil.नक्शा[क][0],
 							GirgitTamil.नक्शा[क][1]);
+				}
+				*/
+				int क = 0;
+				while(true) {
+					if(GirgitTamil.नक्शा[क][0].equals("")) {
+						break;
+					}
+					चिट्ठा.fine(GirgitTamil.नक्शा[क][0]);
+					नक्शातमिल१.put(GirgitTamil.नक्शा[क][0],
+							GirgitTamil.नक्शा[क][1]);
+					++क;
+					
 				}
 			}
 		}else if (लिपि.equals("kn")) {
 			if (नक्शाकन्नड़१ == null) {
-				// 882 को हार्डकोड किया है यहाँ
-				नक्शाकन्नड़१ = new HashMap<String, String>(882);
-				for (int क = 0; क < 882; ++क) {
+				// 884 को हार्डकोड किया है यहाँ
+				नक्शाकन्नड़१ = new HashMap<String, String>(884);
+				for (int क = 0; क < 884; ++क) {
 					नक्शाकन्नड़१.put(GirgitKannada.नक्शा[क][0],
 							GirgitKannada.नक्शा[क][1]);
 				}
 			}
 		}else if (लिपि.equals("gu")) {
 			if (नक्शागुजराती१ == null) {
-				// 899 को हार्डकोड किया है यहाँ
-				नक्शागुजराती१ = new HashMap<String, String>(899);
-				for (int क = 0; क < 899; ++क) {
+				// 901 को हार्डकोड किया है यहाँ
+				नक्शागुजराती१ = new HashMap<String, String>(901);
+				for (int क = 0; क < 901; ++क) {
 					नक्शागुजराती१.put(GirgitGujarati.नक्शा[क][0],
 							GirgitGujarati.नक्शा[क][1]);
 				}
 			}
 		}else if (लिपि.equals("ml")) {
 			if (नक्शामलयालम१ == null) {
-				// 881 को हार्डकोड किया है यहाँ
-				नक्शामलयालम१ = new HashMap<String, String>(881);
-				for (int क = 0; क < 881; ++क) {
+				// 883 को हार्डकोड किया है यहाँ
+				नक्शामलयालम१ = new HashMap<String, String>(883);
+				for (int क = 0; क < 883; ++क) {
 					नक्शामलयालम१.put(GirgitMalayalam.नक्शा[क][0],
 							GirgitMalayalam.नक्शा[क][1]);
 				}
 			}
 		}else if (लिपि.equals("pa")) {
 			if (नक्शागुरुमुखी१ == null) {
-				// 942 को हार्डकोड किया है यहाँ
-				नक्शागुरुमुखी१ = new HashMap<String, String>(942);
-				for (int क = 0; क < 942; ++क) {
+				// 944 को हार्डकोड किया है यहाँ
+				नक्शागुरुमुखी१ = new HashMap<String, String>(944);
+				for (int क = 0; क < 944; ++क) {
 					नक्शागुरुमुखी१.put(GirgitGurumukhi.नक्शा[क][0],
 							GirgitGurumukhi.नक्शा[क][1]);
 				}
 			}
 		}else if (लिपि.equals("hi")) {
 			if (नक्शादेवनागरी१ == null) {
-				// 859 को हार्डकोड किया है यहाँ
-				नक्शादेवनागरी१ = new HashMap<String, String>(859);
-				for (int क = 0; क < 859; ++क) {
+				// 861 को हार्डकोड किया है यहाँ
+				नक्शादेवनागरी१ = new HashMap<String, String>(861);
+				for (int क = 0; क < 861; ++क) {
 					नक्शादेवनागरी१.put(GirgitDevanagari.नक्शा[क][0],
 							GirgitDevanagari.नक्शा[क][1]);
 				}
@@ -7852,7 +7866,9 @@ public class Girgit {
 		for (Iterator<Segment> थैली = स्रोत.getNodeIterator(); थैली.hasNext();) {
 			Segment हिस्सा = थैली.next();
 			if (हिस्सा instanceof CharacterReference) {
+								बदलू.replace(हिस्सा, रंगो(CharacterReference.decode(हिस्सा.toString()), लिपि, कुछबदलाहै));
 			} else if (हिस्सा instanceof Tag) {
+				//यहाँ पर IMG alt और A title का बदलाव होना चाहिए
 			} else {
 				बदलू.replace(हिस्सा, रंगो(हिस्सा.toString(), लिपि, कुछबदलाहै));
 			}
